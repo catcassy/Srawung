@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title','Srawung Ketemu — Srawung')
 @section('content')
-<div class="sticky top-0 bg-white/95 backdrop-blur border-b border-purple-100 px-4 py-3 z-10">
+<div class="sticky bg-white/95 backdrop-blur border-b border-purple-100 px-4 py-3 z-40" style="top: 56px;">
   <h2 class="font-black text-gray-900">🤝 Srawung Ketemu</h2>
   <p class="text-xs text-gray-400">Temukan warga Jember yang online di sekitarmu — ajak ngopi!</p>
 </div>
@@ -85,7 +85,7 @@
 @endif
 
 {{-- Warga di sekitar --}}
-<div class="px-4">
+<div class="px-4 pb-20">
   <h3 class="font-black text-sm text-gray-900 mb-3 flex items-center gap-2">
     🟢 Warga Online di Sekitarmu
     @if(!$checkin || $checkin->expires_at <= now())
@@ -146,7 +146,7 @@
 </div>
 
 {{-- Modal Ketemu --}}
-<div id="ketemu-modal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-end md:items-center justify-center px-4 pb-4">
+<div id="ketemu-modal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-end md:items-center justify-center px-4 pb-20 md:pb-4">
   <div class="bg-white rounded-2xl p-5 w-full max-w-sm shadow-xl">
     <h3 class="font-black text-gray-900 mb-1">🤝 Ajak Ketemu</h3>
     <p id="modal-name" class="text-sm text-purple-600 font-semibold mb-4"></p>
@@ -186,10 +186,16 @@ function doCheckin(){
 function openKetemu(id, name){
   document.getElementById('ketemu-modal').classList.remove('hidden');
   document.getElementById('modal-name').textContent='Mengirim ajakan ke: '+name;
-  document.getElementById('ketemu-form').action='/ketemu/request/'+id;
+  document.getElementById('ketemu-form').action=`{{ route('ketemu.request', '') }}`.slice(0, -1)+id;
 }
-function closeModal(){ document.getElementById('ketemu-modal').classList.add('hidden'); }
-document.getElementById('ketemu-modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+
+function closeModal(){ 
+  document.getElementById('ketemu-modal').classList.add('hidden'); 
+}
+
+document.getElementById('ketemu-modal').addEventListener('click',function(e){
+  if(e.target===this)closeModal();
+});
 </script>
 <style>@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}</style>
 @endpush
