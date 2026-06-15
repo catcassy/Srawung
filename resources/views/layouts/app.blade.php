@@ -26,6 +26,25 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#faf8f
 .logo-hover:hover{
     transform:scale(1.05);
 }
+
+/* FIX: Tinggi pasti untuk mobile navbar */
+.mobile-top-bar {
+    height: 60px;
+    top: 0;
+}
+
+.mobile-bottom-nav {
+    height: 64px;
+    bottom: 0;
+}
+
+/* FIX: Padding untuk main content di mobile */
+@media (max-width: 768px) {
+    main {
+        padding-top: 60px !important;
+        padding-bottom: 64px !important;
+    }
+}
 </style>
 @stack('styles')
 </head>
@@ -212,14 +231,14 @@ src="{{ asset('images/srawung-logo.png') }}"
 </div>
 
 {{-- MOBILE TOP BAR --}}
-<div class="md:hidden fixed top-0 left-0 right-0 bg-white border-b border-purple-100 z-50 flex items-center justify-between px-4 py-2.5">
+<div class="md:hidden fixed left-0 right-0 bg-white border-b border-purple-100 z-50 flex items-center justify-between px-4 mobile-top-bar">
   {{-- Profil di kiri atas --}}
   <div class="relative" id="mobile-profile-wrap">
     <button onclick="toggleMobileMenu()" class="flex items-center gap-2">
-      <img src="{{ auth()->user()->avatarSrc() }}" class="w-8 h-8 rounded-xl object-cover shadow-sm" alt="">
+      <img src="{{ auth()->user()->avatarSrc() }}" class="w-9 h-9 rounded-xl object-cover shadow-sm" alt="">
     </button>
     {{-- Dropdown menu --}}
-    <div id="mobile-menu" class="hidden absolute top-12 left-0 w-64 bg-white rounded-2xl shadow-xl border border-purple-100 z-50 overflow-hidden">
+    <div id="mobile-menu" class="hidden absolute top-full left-0 w-64 bg-white rounded-2xl shadow-xl border border-purple-100 z-50 overflow-hidden mt-2">
       <div class="px-4 py-3 border-b border-purple-50">
         <div class="font-bold text-gray-900">{{ auth()->user()->name }}</div>
         <div class="text-xs text-gray-400">{{ auth()->user()->username }}</div>
@@ -253,53 +272,46 @@ src="{{ asset('images/srawung-logo.png') }}"
   </div>
 
   {{-- Logo tengah --}}
- <a href="{{ route('dashboard') }}" class="flex items-center gap-2">
-
-    <img
-src="{{ asset('images/srawung-logo.png') }}"
-class="logo-hover w-12 h-12 object-contain flex-shrink-0"
-        alt="Srawung"
-        class="w-8 h-8 object-contain">
-
-    <span class="font-black text-gray-900 text-base">
-        Srawung
-    </span>
-
-</a>
+  <a href="{{ route('dashboard') }}" class="flex items-center gap-2">
+    <img src="{{ asset('images/srawung-logo.png') }}"
+      class="logo-hover w-10 h-10 object-contain flex-shrink-0"
+      alt="Srawung">
+    <span class="font-black text-gray-900 text-base">Srawung</span>
+  </a>
 
   {{-- Tombol tulis post kanan --}}
-  <a href="{{ route('post.create') }}" class="w-8 h-8 rounded-xl bg-purple-600 flex items-center justify-center text-white">
-    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+  <a href="{{ route('post.create') }}" class="w-10 h-10 rounded-xl bg-purple-600 flex items-center justify-center text-white">
+    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
   </a>
 </div>
 
 {{-- MOBILE BOTTOM NAV --}}
-<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-purple-100 flex items-center justify-around px-1 py-2 z-50 shadow-lg">
-  <a href="{{ route('dashboard') }}" class="flex flex-col items-center gap-0.5 p-1.5 {{ request()->routeIs('dashboard') ? 'text-purple-600' : 'text-gray-400' }}">
-    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-    <span class="text-[10px]">Beranda</span>
+<nav class="md:hidden fixed left-0 right-0 bg-white border-t border-purple-100 flex items-center justify-around px-1 z-50 shadow-lg mobile-bottom-nav">
+  <a href="{{ route('dashboard') }}" class="flex flex-col items-center gap-1 flex-1 py-2 {{ request()->routeIs('dashboard') ? 'text-purple-600' : 'text-gray-400' }}">
+    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+    <span class="text-[11px] font-medium">Beranda</span>
   </a>
-  <a href="{{ route('search') }}" class="flex flex-col items-center gap-0.5 p-1.5 {{ request()->routeIs('search') ? 'text-purple-600' : 'text-gray-400' }}">
-    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-    <span class="text-[10px]">Cari</span>
+  <a href="{{ route('search') }}" class="flex flex-col items-center gap-1 flex-1 py-2 {{ request()->routeIs('search') ? 'text-purple-600' : 'text-gray-400' }}">
+    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+    <span class="text-[11px] font-medium">Cari</span>
   </a>
-  <a href="{{ route('lokal') }}" class="flex flex-col items-center gap-0.5 p-1.5 {{ request()->routeIs('lokal') ? 'text-purple-600' : 'text-gray-400' }}">
-    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/></svg>
-    <span class="text-[10px]">Lokal</span>
+  <a href="{{ route('lokal') }}" class="flex flex-col items-center gap-1 flex-1 py-2 {{ request()->routeIs('lokal') ? 'text-purple-600' : 'text-gray-400' }}">
+    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/></svg>
+    <span class="text-[11px] font-medium">Lokal</span>
   </a>
-  <a href="{{ route('pesan.index') }}" class="flex flex-col items-center gap-0.5 p-1.5 relative {{ request()->routeIs('pesan.*') ? 'text-purple-600' : 'text-gray-400' }}">
-    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+  <a href="{{ route('pesan.index') }}" class="flex flex-col items-center gap-1 flex-1 py-2 relative {{ request()->routeIs('pesan.*') ? 'text-purple-600' : 'text-gray-400' }}">
+    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
     @if(auth()->user()->unreadMessages() > 0)
-    <span class="absolute top-0 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+    <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
     @endif
-    <span class="text-[10px]">Pesan</span>
+    <span class="text-[11px] font-medium">Pesan</span>
   </a>
-  <a href="{{ route('ketemu.index') }}" class="flex flex-col items-center gap-0.5 p-1.5 relative {{ request()->routeIs('ketemu.*') ? 'text-purple-600' : 'text-gray-400' }}">
-    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+  <a href="{{ route('ketemu.index') }}" class="flex flex-col items-center gap-1 flex-1 py-2 relative {{ request()->routeIs('ketemu.*') ? 'text-purple-600' : 'text-gray-400' }}">
+    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
     @if(auth()->user()->pendingMeetups() > 0)
-    <span class="absolute top-0 right-0 w-2 h-2 bg-orange-400 rounded-full"></span>
+    <span class="absolute top-1 right-1 w-2 h-2 bg-orange-400 rounded-full"></span>
     @endif
-    <span class="text-[10px]">Ketemu</span>
+    <span class="text-[11px] font-medium">Ketemu</span>
   </a>
 </nav>
 
