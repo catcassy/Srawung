@@ -2,7 +2,7 @@
 @section('title','Pesan — Srawung')
 @section('content')
 
-<div class="sticky top-0 bg-white/95 backdrop-blur border-b border-purple-100 px-4 py-3 flex items-center justify-between z-10 md:top-0 top-14">
+<div class="sticky bg-white/95 backdrop-blur border-b border-purple-100 px-4 py-3 flex items-center justify-between z-40" style="top: 56px;">
   <h2 class="font-black text-gray-900">Pesan</h2>
   <a href="{{ route('pesan.search') }}" class="flex items-center gap-1.5 text-sm font-semibold text-purple-600 border border-purple-200 px-3 py-1.5 rounded-xl hover:bg-purple-50 transition">
     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
